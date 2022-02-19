@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Rapport de remise</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body {
+            font-family: Arial;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+
+            table thead th {
+                vertical-align: bottom;
+                border-bottom: 2px solid #dee2e6;
+                padding: .75rem;
+                border-top: 1px solid #dee2e6;
+                text-align: left;
+            }
+
+            table td, table th {
+                padding: .75rem;
+                vertical-align: top;
+                border-top: 1px solid #dee2e6;
+            }
+
+            table th {
+                padding: .75rem;
+                vertical-align: top;
+                border-top: 1px solid #dee2e6;
+            }
+
+            .text--normal {
+                font-weight: normal;
+            }
+
+            .text--bold {
+                font-weight: bold;
+            }
+
+            .text--center {
+                text-align: center;
+            }
+
+            .header-infos {
+                margin-top: 16px;
+                margin-bottom: 16px;
+            }
+
+    </style>
+</head>
+<body>
+    <h1>Rapport de remise</h1>
+    <div class="header-infos">
+        <h3><span class="text--bold">Lot : </span><span class="text--normal">{{ printBatch.uid }}</span></h3>
+        <h3><span class="text--bold">Opérateur d'impression : </span><span class="text--normal">{{ operator }}</span></h3>
+        <h3><span class="text--bold">Département Scolaire : </span><span class="text--normal">{{ siteName }}</span></h3>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th class="text--center">Id MEPSA</th>
+                <th>Propriétaire de la carte</th>
+                <th class="text--center">Date de naissance</th>
+                <th>Opérateur de remise</th>
+                <th>Signature</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each printBatch.cards}}
+            <tr>
+                <td class="text--center">{{ this.id_mepsa }}</td>
+                <td>{{ this.firstName }} {{ this.lastName }}</td>
+                <td class="text--center">{{ date this.birthDate }}</td>
+                <td></td>
+                <td style="height: 30px;"></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>
