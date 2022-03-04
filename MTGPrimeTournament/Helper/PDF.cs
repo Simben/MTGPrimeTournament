@@ -7,7 +7,7 @@ namespace MTGPrimeTournament.Helper
 {
     public class PDF
     {
-        private Func<object, string> template { get; }
+        private HandlebarsTemplate<object, object> template { get; }
         private byte[] pdfBytes { get; set; }
 
         public PDF(string templatePath)

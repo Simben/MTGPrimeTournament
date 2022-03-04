@@ -22,7 +22,6 @@
             height: 42px;
             display: flex;
             justify-content: center;
-            border: solid;
             align-items: center;
         }
 
@@ -136,7 +135,7 @@
 </head>
 <body>
     {{#each List}}
-    <p>
+    <div>
         <div class="parent">
             <div class="div1" style="height:100%;"><img src={{ ../Image }} /></div>
             <div class="div2" style="height:100%;"><div id="circle" style="margin: auto auto;"></div></div>
@@ -159,8 +158,31 @@
             <div class="div19"></div>
             <div class="div20"></div>
         </div>
-    </p>
-    </br>
+    </div>
+    <div>
+        <div class="parent">
+            <div class="div1" style="height:100%;"><img src={{ ../Image }} /></div>
+            <div class="div2" style="height:100%;"><div id="circle" style="margin: auto auto;"></div></div>
+            <div class="div3" style="height:100%;"><div id="circle" style="margin: auto auto;"></div></div>
+            <div class="div4" style="height:100%;"><div id="rect" style="margin: auto auto;"></div></div>
+            <div class="div5" style="height:100%;"><div id="rect" style="margin: auto auto;"></div></div>
+            <div class="div6" style="height:100%;">{{#if this.Bye}}2{{else}}__________{{/if}}</div>
+            <div class="div7" style="height:100%;">{{#if this.Bye}}0{{else}}__________{{/if}}</div>
+            <div class="div8" style="text-align: left;">Name : {{this.Player1}}</div>
+            <div class="div9" style="text-align: left;">Sign :</div>
+            <div class="div10" style="text-align: left;">Name : {{this.Player2}}</div>
+            <div class="div11" style="text-align: left;">Sign :</div>
+            <div class="div12">__________</div>
+            <div class="div13"># Wins</div>
+            <div class="div14"># Draw</div>
+            <div class="div15">Drop</div>
+            <div class="div16">Penality</div>
+            <div class="div17"><b>ROUND # : {{ ../Round }}</b></div>
+            <div class="div18"><b>TABLE # : {{this.Table}}</b></div>
+            <div class="div19"></div>
+            <div class="div20"></div>
+        </div>
+    </div>
     {{/each}}
 </body>
 </html>
