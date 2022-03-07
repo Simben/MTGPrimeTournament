@@ -10,10 +10,12 @@ namespace MTGPrimeTournament.Helper
         private HandlebarsTemplate<object, object> template { get; }
         private byte[] pdfBytes { get; set; }
 
+
         public PDF(string templatePath)
         {
             var rawHtml = File.ReadAllText(templatePath);
             this.template = Handlebars.Compile(rawHtml);
+            
 
             /*Handlebars.RegisterHelper("card_status", (TextWriter output, dynamic context, object[] arguments) => {
                 var status = (string)arguments[0];
@@ -26,6 +28,17 @@ namespace MTGPrimeTournament.Helper
                 var date = (DateTime)arguments[0];
                 output.WriteSafeString(date.ToString("d", ci));
             });*/
+        }
+
+        public void GenerateHtml(object data, string fileName)
+        {
+            var compiledHtml = this.template(data);
+            using (System.IO.StreamWriter sw = new StreamWriter(fileName, false))
+            {
+                sw.Write(compiledHtml);
+                sw.Close();
+            }
+            System.Diagnostics.Process.Start(fileName);
         }
 
         public void Generate(object data)

@@ -117,12 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox1.Text" xml:space="preserve">
-    <value>Table	Player 1	Player 2	Match Results	
-1	Toto (0 Points)	john (0 Points)	No results	 
-2	titi (0 Points)	papa (0 Points)	No results	 
-3	popo (0 Points)	jane (0 Points)	No results	 
-4	Michel (0 Points)	doe (0 Points)	No results	 
-5	Tata (0 Points)	BYE	2 - 0	 </value>
-  </data>
 </root>
