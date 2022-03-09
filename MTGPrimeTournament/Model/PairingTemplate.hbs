@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Pairing Ronde {{Round}}</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body {
+            font-family: Arial;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+
+            table thead th {
+                vertical-align: bottom;
+                border-bottom: 2px solid #dee2e6;
+                padding: .75rem;
+                border-top: 1px solid #dee2e6;
+                text-align: left;
+            }
+
+            table td, table th {
+                padding: .75rem;
+                vertical-align: top;
+                border-top: 1px solid #dee2e6;
+            }
+
+            table th {
+                padding: .75rem;
+                vertical-align: top;
+                border-top: 1px solid #dee2e6;
+            }
+
+        .text--normal {
+            font-weight: normal;
+        }
+
+        .text--bold {
+            font-weight: bold;
+        }
+
+        .text--center {
+            text-align: center;
+        }
+
+        .header-infos {
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+
+        .color1 {
+            background-color: #808080;
+        }
+
+        .color2 {
+            background-color: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    {{#each List}}
+    <div class="header-infos" >
+        <img src={{ ../Image }} />
+        <div style=" text-align: center; margin: auto auto;">
+            <span class="text--bold" style="display: table; width: 100%;  ">Ronde : {{../Round}}</span>
+        </div>
+    </div>
+    <table style="page-break-after: always;">
+        <thead>
+            <tr>
+                <th class="text--center">Joueur 1</th>
+                <th>Table</th>
+                <th class="text--center">Joueur 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.pairingLine}}
+            <tr style="background-color:{{#if this.pairLine}}#808080{{else}}#dee2e6{{/if}}">
+                <td class="text--center"> {{ this.pairingLine.Player1 }}<br>{{ this.pairingLine.Player1_Points }}</td>
+                <td>{{ this.pairingLine.Table }}</td>
+                <td class="text--center">{{ this.pairingLine.Player2 }}<br>{{ this.pairingLine.Player2_Points }}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{/each}}
+</body>
+</html>

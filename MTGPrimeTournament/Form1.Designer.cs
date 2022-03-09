@@ -38,6 +38,7 @@ namespace MTGPrimeTournament
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tb_RoundNumber = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,11 +129,22 @@ namespace MTGPrimeTournament
             this.tb_RoundNumber.TabIndex = 8;
             this.tb_RoundNumber.Text = "1";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(229, 399);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(178, 23);
+            this.button5.TabIndex = 9;
+            this.button5.Text = "Generate HTML Pairing List";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 450);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.tb_RoundNumber);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
@@ -158,6 +170,7 @@ namespace MTGPrimeTournament
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb_RoundNumber;
+        private System.Windows.Forms.Button button5;
     }
 }
 

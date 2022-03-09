@@ -80,16 +80,15 @@
     <Content Include="Model\template.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Model\template - Copier.hbs">
+    <None Include="Model\PairingTemplate.hbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Model\templatebackUp.hbs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Model\template.hbs">
+    <None Include="Model\PaperSlipTemplate.hbs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Compile Include="Model\Pairing.cs" />
+    <Compile Include="Model\PairingMockup.cs" />
+    <Compile Include="Model\PaperSlipMockup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

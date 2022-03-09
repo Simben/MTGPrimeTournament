@@ -16,7 +16,7 @@ namespace MTGPrimeTournament.Model
         public string Score { set; get; }
         public bool Bye { get; set; }
 
-        public bool Breakpage { get; set; }
+        
 
     }
 }

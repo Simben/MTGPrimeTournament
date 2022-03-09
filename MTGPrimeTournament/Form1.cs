@@ -16,17 +16,24 @@ namespace MTGPrimeTournament
     public partial class Form1 : Form
     {
         private const int PAPER_SLIP_MAX_PER_PAGE = 4;
+        private const int PAIRING_MAX_PER_PAGE = 4;
+
+        private const string PaperSlip_HBTemplate = "PaperSlipTemplate.hbs";
+        private const string Pairing_HBTemplate = "PairingTemplate.hbs";
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        List<Pairing> Pairing = new List<Pairing>();
+        List<PaperSlipMockup> Pairing_PS = new List<PaperSlipMockup>();
+        List<ParingPageMockup> Pairing_Full = new List<ParingPageMockup>();
 
-        private void Deserialize()
+        private void DeserializePaperSlip()
         {
-            if (Pairing != null)
-                Pairing.Clear();
+            if (Pairing_PS != null)
+                Pairing_PS.Clear();
+
             int i = 0;
             var Lines = this.textBox1.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
@@ -39,29 +46,110 @@ namespace MTGPrimeTournament
                     continue;
 
                 var elements = line.Split('\t');
-                Pairing.Add(new Model.Pairing()
+                Pairing_PS.Add(new Model.PaperSlipMockup()
                 {
-                    Table = elements[0],
-                    Player1 = Regex.Replace(elements[1], @"\([0-9]+ ([A-Z])\w+\)", ""),
-                    Player1_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(','\0').Replace(')', '\0'),
-                    Player2 = Regex.Replace(elements[2], @"\([0-9]+ ([A-Z])\w+\)", ""),
-                    Player2_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
-                    Score = elements[3],
-                    Bye = elements[2] == "BYE",
+                    pairingLine = new Pairing()
+                    {
+                        Table = elements[0],
+                        Player1 = Regex.Replace(elements[1], @"\([0-9]+ ([A-Z])\w+\)", ""),
+                        Player1_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                        Player2 = Regex.Replace(elements[2], @"\([0-9]+ ([A-Z])\w+\)", ""),
+                        Player2_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                        Score = elements[3],
+                        Bye = elements[2] == "BYE"
+                    },
                     Breakpage = i % PAPER_SLIP_MAX_PER_PAGE == PAPER_SLIP_MAX_PER_PAGE - 1
                 });
                 i++;
             }
         }
+        private void DeserializePairing()
+        {
+            if (Pairing_Full != null)
+                Pairing_Full.Clear();
+
+
+            var Lines = this.textBox1.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var Tmp = new List<Pairing>();
+
+            foreach (var line in Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                    continue;
+
+                //detect if header
+                if (line.Contains("Table") || line.Contains("Player 1") || line.Contains("Player 2"))
+                    continue;
+
+                
+
+                var elements = line.Split('\t');
+                //Add J1 first
+
+
+                Tmp.Add(new Model.Pairing()
+                {
+                    Table = elements[0],
+                    Player1 = Regex.Replace(elements[1], @"\([0-9]+ ([A-Z])\w+\)", ""),
+                    Player1_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                    Player2 = Regex.Replace(elements[2], @"\([0-9]+ ([A-Z])\w+\)", ""),
+                    Player2_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                    Score = elements[3],
+                    Bye = elements[2] == "BYE"
+                });
+
+                if (elements[2] != "BYE")
+                {
+                    Tmp.Add(new Model.Pairing()
+                    {
+                        Table = elements[0],
+                        Player2 = Regex.Replace(elements[1], @"\([0-9]+ ([A-Z])\w+\)", ""),
+                        Player2_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                        Player1 = Regex.Replace(elements[2], @"\([0-9]+ ([A-Z])\w+\)", ""),
+                        Player1_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                        Score = elements[3],
+                        Bye = elements[2] == "BYE"
+                    });
+                }
+            }
+            Tmp = Tmp.OrderBy(p=>p.Player1).ToList();
+
+            if (this.Pairing_Full != null)
+                this.Pairing_Full.Clear();
+
+           
+            int i = 0;
+            int currpage = -1;
+            foreach (var t in Tmp)
+            {
+                if (i % PAIRING_MAX_PER_PAGE == 0)
+                {
+                    this.Pairing_Full.Add(new ParingPageMockup());
+                    currpage++;
+                }
+
+                this.Pairing_Full[currpage].pairingLine.Add(new PairingLineMockup()
+                {
+                    pairingLine = t,
+                    pairLine = i%2 ==0
+                    
+                });
+
+
+                i++;
+            }
+
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Deserialize();
+            DeserializePaperSlip();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Helper.PDF pdf = new Helper.PDF("Model\\template.hbs");
+            Helper.PDF pdf = new Helper.PDF("Model\\" + PaperSlip_HBTemplate);
             string base64 = "";
             using (Image image = Image.FromFile("Assets\\MTGPrime.png"))
             {
@@ -81,7 +169,7 @@ namespace MTGPrimeTournament
                 Round = 1,
                 Image = "data:image/png;base64," + base64,
                 //Image = "totot",
-                List = Pairing
+                List = Pairing_PS
             });
             pdf.SaveAs("test.pdf");
         }
@@ -98,8 +186,8 @@ namespace MTGPrimeTournament
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Deserialize();
-            Helper.PDF pdf = new Helper.PDF("Model\\template.hbs");
+            DeserializePaperSlip();
+            Helper.PDF pdf = new Helper.PDF("Model\\" + PaperSlip_HBTemplate);
             string base64 = "";
             using (Image image = Image.FromFile("Assets\\MTGPrime.png"))
             {
@@ -118,8 +206,37 @@ namespace MTGPrimeTournament
                 Round = tb_RoundNumber.Text,
                 Image = "data:image/png;base64," + base64,
                 //Image = "totot",
-                List = Pairing
+                List = Pairing_PS
             }, "html.html");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DeserializePairing();
+            
+
+            Helper.PDF pdf = new Helper.PDF("Model\\" + Pairing_HBTemplate);
+            string base64 = "";
+            using (Image image = Image.FromFile("Assets\\MTGPrime.png"))
+            {
+                using (MemoryStream m = new MemoryStream())
+                {
+                    image.Save(m, image.RawFormat);
+                    byte[] imageBytes = m.ToArray();
+
+                    // Convert byte[] to Base64 String
+                    base64 = Convert.ToBase64String(imageBytes);
+
+                }
+            }
+            pdf.GenerateHtml(new
+            {
+                Round = tb_RoundNumber.Text,
+                Image = "data:image/png;base64," + base64,
+                //Image = "totot",
+                List = Pairing_Full
+            }, "html.html");
+
         }
     }
 }

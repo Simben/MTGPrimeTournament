@@ -151,13 +151,13 @@
         <div class="div3" style="height:100%;"><div id="circle" style="margin: auto auto;"></div></div>
         <div class="div4" style="height:100%;"><div id="rect" style="margin: auto auto;"></div></div>
         <div class="div5" style="height:100%;"><div id="rect" style="margin: auto auto;"></div></div>
-        <div class="div6" style="height:100%;">{{#if this.Bye}}2{{else}}_____{{/if}}</div>
-        <div class="div7" style="height:100%;">{{#if this.Bye}}0{{else}}_____{{/if}}</div>
-        <div class="div8" style="text-align: left;">Name : {{this.Player1}}</div>
-        <div class="div9" style="text-align: left;">Score : {{this.Player1_Points}}</div>
+        <div class="div6" style="height:100%;">{{#if this.pairingLine.Bye}}2{{else}}_____{{/if}}</div>
+        <div class="div7" style="height:100%;">{{#if this.pairingLine.Bye}}0{{else}}_____{{/if}}</div>
+        <div class="div8" style="text-align: left;">Name : {{this.pairingLine.Player1}}</div>
+        <div class="div9" style="text-align: left;">Score : {{this.pairingLine.Player1_Points}}</div>
         <div class="div21" style="text-align: left;">Sign :</div>
-        <div class="div10" style="text-align: left;">Name : {{this.Player2}}</div>
-        <div class="div11" style="text-align: left;">Score : {{this.Player2_Points}}</div>
+        <div class="div10" style="text-align: left;">Name : {{this.pairingLine.Player2}}</div>
+        <div class="div11" style="text-align: left;">Score : {{this.pairingLine.Player2_Points}}</div>
         <div class="div22" style="text-align: left;">Sign :</div>
         <div class="div12">_____</div>
         <div class="div13"><u># Drop</u></div>
@@ -165,7 +165,7 @@
         <div class="div15"><u># Wins</u></div>
         <div class="div16"><u>Penality</u></div>
         <div class="div17"><b>ROUND # : {{ ../Round }}</b></div>
-        <div class="div18"><b>TABLE # : {{this.Table}}</b></div>
+        <div class="div18"><b>TABLE # : {{this.pairingLine.Table}}</b></div>
         <div class="div19"></div>
         <div class="div20"></div>
     </div>
