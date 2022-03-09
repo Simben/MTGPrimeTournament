@@ -16,7 +16,7 @@ namespace MTGPrimeTournament
     public partial class Form1 : Form
     {
         private const int PAPER_SLIP_MAX_PER_PAGE = 4;
-        private const int PAIRING_MAX_PER_PAGE = 4;
+        private const int PAIRING_MAX_PER_PAGE = 38;
 
         private const string PaperSlip_HBTemplate = "PaperSlipTemplate.hbs";
         private const string Pairing_HBTemplate = "PairingTemplate.hbs";

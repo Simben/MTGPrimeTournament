@@ -6,11 +6,13 @@
     <style type="text/css">
         body {
             font-family: Arial;
+            -webkit-print-color-adjust: exact;
+        
         }
 
         table {
             width: 100%;
-            margin-bottom: 1rem;
+            margin-bottom: 2px;
             color: #212529;
             border-collapse: collapse;
         }
@@ -18,19 +20,19 @@
             table thead th {
                 vertical-align: bottom;
                 border-bottom: 2px solid #dee2e6;
-                padding: .75rem;
+                
                 border-top: 1px solid #dee2e6;
                 text-align: left;
             }
 
             table td, table th {
-                padding: .75rem;
+                
                 vertical-align: top;
                 border-top: 1px solid #dee2e6;
             }
 
             table th {
-                padding: .75rem;
+              
                 vertical-align: top;
                 border-top: 1px solid #dee2e6;
             }
@@ -79,10 +81,10 @@
         </thead>
         <tbody>
             {{#each this.pairingLine}}
-            <tr style="background-color:{{#if this.pairLine}}#808080{{else}}#dee2e6{{/if}}">
-                <td class="text--center"> {{ this.pairingLine.Player1 }}<br>{{ this.pairingLine.Player1_Points }}</td>
+            <tr style="background-color:{{#if this.pairLine}}#ffffff{{else}}#e6e6e6{{/if}}">
+                <td class="text--center"> {{ this.pairingLine.Player1 }} {{ this.pairingLine.Player1_Points }}</td>
                 <td>{{ this.pairingLine.Table }}</td>
-                <td class="text--center">{{ this.pairingLine.Player2 }}<br>{{ this.pairingLine.Player2_Points }}</td>
+                <td class="text--center">{{ this.pairingLine.Player2 }} {{ this.pairingLine.Player2_Points }}</td>
             </tr>
             {{/each}}
         </tbody>
