@@ -10,13 +10,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MTGPrimeTournament
 {
     public partial class Form1 : Form
     {
-        private const int PAPER_SLIP_MAX_PER_PAGE = 4;
-        private const int PAIRING_MAX_PER_PAGE = 38;
+        private int PAPER_SLIP_MAX_PER_PAGE = 4;
+        private int PAIRING_MAX_PER_PAGE = 38;
 
         private const string PaperSlip_HBTemplate = "PaperSlipTemplate.hbs";
         private const string Pairing_HBTemplate = "PairingTemplate.hbs";
@@ -24,6 +25,9 @@ namespace MTGPrimeTournament
         public Form1()
         {
             InitializeComponent();
+            
+            PAPER_SLIP_MAX_PER_PAGE = Convert.ToInt32(ConfigurationManager.AppSettings["max_paperslip_per_page"]);
+            PAIRING_MAX_PER_PAGE = Convert.ToInt32(ConfigurationManager.AppSettings["max_line_per_pairing"]);
         }
 
         List<PaperSlipMockup> Pairing_PS = new List<PaperSlipMockup>();
@@ -92,9 +96,9 @@ namespace MTGPrimeTournament
                 {
                     Table = elements[0],
                     Player1 = Regex.Replace(elements[1], @"\([0-9]+ ([A-Z])\w+\)", ""),
-                    Player1_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                    Player1_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '[').Replace("Points)", "Pts]"),
                     Player2 = Regex.Replace(elements[2], @"\([0-9]+ ([A-Z])\w+\)", ""),
-                    Player2_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                    Player2_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '[').Replace("Points)", "Pts]"),
                     Score = elements[3],
                     Bye = elements[2] == "BYE"
                 });
@@ -105,9 +109,9 @@ namespace MTGPrimeTournament
                     {
                         Table = elements[0],
                         Player2 = Regex.Replace(elements[1], @"\([0-9]+ ([A-Z])\w+\)", ""),
-                        Player2_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                        Player2_Points = Regex.Match(elements[1], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '[').Replace("Points)", "Pts]"),
                         Player1 = Regex.Replace(elements[2], @"\([0-9]+ ([A-Z])\w+\)", ""),
-                        Player1_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '\0').Replace(')', '\0'),
+                        Player1_Points = Regex.Match(elements[2], @"\([0-9]+ ([A-Z])\w+\)").Value.Replace('(', '[').Replace("Points)", "Pts]"),
                         Score = elements[3],
                         Bye = elements[2] == "BYE"
                     });
@@ -232,6 +236,7 @@ namespace MTGPrimeTournament
             pdf.GenerateHtml(new
             {
                 Round = tb_RoundNumber.Text,
+                Tournament = tb_TournamentName.Text,
                 Image = "data:image/png;base64," + base64,
                 //Image = "totot",
                 List = Pairing_Full

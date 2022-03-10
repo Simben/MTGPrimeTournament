@@ -7,7 +7,6 @@
         body {
             font-family: Arial;
             -webkit-print-color-adjust: exact;
-        
         }
 
         table {
@@ -20,20 +19,18 @@
             table thead th {
                 vertical-align: bottom;
                 border-bottom: 2px solid #dee2e6;
-                
                 border-top: 1px solid #dee2e6;
-                text-align: left;
+                text-align: center;
             }
 
             table td, table th {
-                
-                vertical-align: top;
+                vertical-align: central;
+                text-align: center;
                 border-top: 1px solid #dee2e6;
             }
 
             table th {
-              
-                vertical-align: top;
+                vertical-align: central;
                 border-top: 1px solid #dee2e6;
             }
 
@@ -65,30 +62,36 @@
 </head>
 <body>
     {{#each List}}
-    <div class="header-infos" >
-        <img src={{ ../Image }} />
-        <div style=" text-align: center; margin: auto auto;">
-            <span class="text--bold" style="display: table; width: 100%;  ">Ronde : {{../Round}}</span>
+    <div class="header-infos">
+        <div>
+            <div style="width: 10%; float: left">
+                <img src={{ ../Image }} />
+            </div>
+            <div style=" text-align: center; margin: auto auto; width: 90%; float: left">
+                <span class="text--bold" style="display: table; width: 100%; font-size: 30px;height: 40px;">{{../Tournament}}</span>
+                <span class="text--bold" style="display: table; width: 100%;  ">Ronde : {{../Round}}</span>
+            </div>
+
+            <table style="page-break-after: always;">
+                <thead>
+                    <tr>
+                        <th class="text--center">Joueur 1</th>
+                        <th>Table</th>
+                        <th class="text--center">Joueur 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.pairingLine}}
+                    <tr style="background-color:{{#if this.pairLine}}#ffffff{{else}}#e6e6e6{{/if}}">
+                        <td class="text--center"> {{ this.pairingLine.Player1 }} {{ this.pairingLine.Player1_Points }}</td>
+                        <td>{{ this.pairingLine.Table }}</td>
+                        <td class="text--center">{{ this.pairingLine.Player2 }} {{ this.pairingLine.Player2_Points }}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
     </div>
-    <table style="page-break-after: always;">
-        <thead>
-            <tr>
-                <th class="text--center">Joueur 1</th>
-                <th>Table</th>
-                <th class="text--center">Joueur 2</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each this.pairingLine}}
-            <tr style="background-color:{{#if this.pairLine}}#ffffff{{else}}#e6e6e6{{/if}}">
-                <td class="text--center"> {{ this.pairingLine.Player1 }} {{ this.pairingLine.Player1_Points }}</td>
-                <td>{{ this.pairingLine.Table }}</td>
-                <td class="text--center">{{ this.pairingLine.Player2 }} {{ this.pairingLine.Player2_Points }}</td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
     {{/each}}
 </body>
 </html>
